@@ -2,16 +2,8 @@ import axios from "axios";
 import PizzasItem from "./PizzasItem";
 import React, { useState, useEffect } from "react";
 import { usePizzas } from "../hooks/usePizzas";
-import { useAuth } from "../../context/AuthContext";
-import { useRegister } from "@/app/context/RegisterContext";
 
 const PizzasList = ({ onSelectPizza }) => {
-  const { isAuthenticated, userAuth } = useAuth();
-  const { accounts, userReg } = useRegister();
-  console.log(isAuthenticated);
-  console.log(accounts, userReg);
-  console.log(accounts, userAuth);
-
   const [pizzas, setPizzas] = useState([]);
   const url_api = "https://free-food-menus-api-two.vercel.app/pizzas";
   useEffect(() => {
@@ -39,6 +31,7 @@ const PizzasList = ({ onSelectPizza }) => {
   const [select, setSelect] = useState("");
   const [search, setSearch] = useState("");
   const filteredAndSortedPizzas = usePizzas(search, select, pizzas);
+
   return (
     <div>
       <div

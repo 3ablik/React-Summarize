@@ -3,7 +3,7 @@ import img from "../images/logo.png";
 export default function Footer() {
   return (
     <footer>
-      <img src={img.src} alt="Logo" />
+      <img src={img.src} alt="logo" />
       <p>
         Git:{" "}
         <a

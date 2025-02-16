@@ -1,7 +1,12 @@
+"use client";
 import React, { useState } from "react";
 import { motion } from "framer-motion"; // Прикольная штука
+import { useRouter } from "next/navigation";
 
-function Modal({ pizza, onClose }) {
+function Modal({ pizza, onClose, isAuthenticated }) {
+  console.log(isAuthenticated);
+
+  const router = useRouter();
   const [rotation, setRotation] = useState(0);
   const [isClickedButton, setIsClickedButton] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -12,8 +17,11 @@ function Modal({ pizza, onClose }) {
       setRotation((prev) => prev + 405);
     }, 500);
   };
-  const handleClickButton = () => {
+  const handleAnimationButton = () => {
     setIsClickedButton(true);
+  };
+  const handleLoginClick = () => {
+    router.push("/login");
   };
 
   return (
@@ -135,7 +143,7 @@ function Modal({ pizza, onClose }) {
                 fontSize: "20px",
                 marginTop: "20px",
               }}
-              onClick={() => handleClickButton()}
+              onClick={() => handleAnimationButton()}
             >
               {isClickedButton ? "No more animation" : "Click for animation"}
             </button>
@@ -146,8 +154,13 @@ function Modal({ pizza, onClose }) {
                 fontSize: "20px",
                 marginTop: "20px",
               }}
+              onClick={
+                isAuthenticated ? console.log(true) : () => handleLoginClick()
+              }
             >
-              Add to basket for {pizza.price}$
+              {isAuthenticated
+                ? `Add to basket for ${pizza.price}$`
+                : "Maybe Log In?"}
             </button>
           </div>
         </div>
