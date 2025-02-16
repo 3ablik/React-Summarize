@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
-import { useRegister } from "../context/RegisterContext";
-import { useAuth } from "../context/AuthContext";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../store/slices/authSlice";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -22,32 +22,37 @@ const StyledLink = styled(Link)`
 `;
 
 const Profile = () => {
-  const { userReg } = useRegister();
-  const { isAuthenticated, userAuth, setIsAuthenticated } = useAuth();
-
-  userAuth ? console.log(userAuth.login) : console.log(userReg.name);
+  const dispatch = useDispatch();
+  const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
 
   return (
     <div>
-      <h1>Profile</h1>
+      <h1
+        style={{
+          color: "white",
+        }}
+      >
+        Profile
+      </h1>
       {isAuthenticated ? (
         <div>
-          {userAuth ? (
-            <div>
-              <h3>Login: {userAuth.login}</h3>
-              <h3>Email: {userAuth.email}</h3>
-            </div>
-          ) : (
-            <div>
-              <h3>Login: {userReg.login}</h3>
-              <h3>Email: {userReg.email}</h3>
-            </div>
-          )}
-          <button
-            onClick={() => {
-              setIsAuthenticated(false);
+          <h3
+            style={{
+              color: "white",
             }}
-            style={{ backgroundColor: "red" }}
+          >
+            Login: {userAuth.login}
+          </h3>
+          <h3
+            style={{
+              color: "white",
+            }}
+          >
+            Email: {userAuth.email}
+          </h3>
+          <button
+            onClick={() => dispatch(logout())}
+            style={{ backgroundColor: "red", color: "#fff" }}
           >
             Exit
           </button>

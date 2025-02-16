@@ -1,8 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "../context/AuthContext";
-import { useRegister } from "../context/RegisterContext";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/slices/authSlice";
 import Link from "next/link";
 import styled from "styled-components";
 
@@ -14,31 +14,11 @@ const StyledLink = styled(Link)`
 
 const LoginForm = () => {
   const router = useRouter();
-  const [login, setLogin] = useState("");
-  const [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const { isAuthenticated, error } = useSelector((state) => state.auth);
 
-  const { isAuthenticated, auth } = useAuth();
-  const { accounts } = useRegister();
-
-  const [wrong, setWrong] = useState(false);
-
-  const handleLogin = (e) => {
-    setLogin(e.target.value);
-  };
-  const handlePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const handleAccount = () => {
-    const foundUser = accounts.find(
-      (account) => account.login === login && account.password === password
-    );
-    if (foundUser) {
-      auth(foundUser);
-    } else {
-      setWrong(true);
-    }
-  };
+  const [loginInput, setLoginInput] = useState("");
+  const [passwordInput, setPasswordInput] = useState("");
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -47,10 +27,18 @@ const LoginForm = () => {
   }, [isAuthenticated, router]);
 
   return (
-    <div className="login-form" style={{ height: "300px" }}>
+    <div className="login-form" style={{ height: "350px" }}>
       <div>
-        <input onChange={handleLogin} placeholder="Login" type="text" />
-        <input onChange={handlePassword} placeholder="Password" type="text" />
+        <input
+          onChange={(e) => setLoginInput(e.target.value)}
+          placeholder="Login"
+          type="text"
+        />
+        <input
+          onChange={(e) => setPasswordInput(e.target.value)}
+          placeholder="Password"
+          type="password"
+        />
       </div>
       <div
         style={{
@@ -60,7 +48,13 @@ const LoginForm = () => {
           alignItems: "center",
         }}
       >
-        <button onClick={handleAccount}>Login</button>
+        <button
+          onClick={() =>
+            dispatch(login({ login: loginInput, password: passwordInput }))
+          }
+        >
+          Login
+        </button>
         <StyledLink href="/register">
           <div
             style={{
@@ -82,7 +76,7 @@ const LoginForm = () => {
         </StyledLink>
       </div>
 
-      {wrong ? <h1>Wrong password or login</h1> : <h1></h1>}
+      {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
     </div>
   );
 };
