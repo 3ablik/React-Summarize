@@ -34,7 +34,7 @@ export default function RootLayout({ children }) {
                   <p>+78978978978</p>
                   <p>site@site.site</p>
                 </div>
-                <img src={img.src} />
+                <img src={img.src} alt="Logo" />
               </nav>
             </header>
 
