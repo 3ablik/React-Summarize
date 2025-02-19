@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const users = JSON.parse(localStorage.getItem("users")) || [
+  { login: "admin", email: "admin@admin.admin", password: "admin123", cart: null },
+]
+
 const initialState = {
   isAuthenticated: false,
   error: null,
-  users: JSON.parse(localStorage.getItem("users")) || [
-    { login: "admin", email: "admin@admin.admin", password: "admin123" },
-  ],
+  users: users,
   userAuth: JSON.parse(localStorage.getItem("userAuth")) || null,
 };
 
@@ -24,6 +26,7 @@ const authSlice = createSlice({
         state.userAuth = user;
         state.error = null;
         localStorage.setItem("userAuth", JSON.stringify(user));
+        
       } else {
         state.error = "Wrong login or password";
       }
@@ -39,7 +42,10 @@ const authSlice = createSlice({
       state.isAuthenticated = true;
       state.userAuth = action.payload;
       state.error = null;
-      localStorage.setItem("userAuth", JSON.stringify(action.payload));
+      localStorage.getItem("userAuth") ?
+      const users = JSON.parse(localStorage.getItem("users"))
+      
+      localStorage.setItem("userAuth", JSON.stringify([...users, action.payload]));
     },
   },
 });

@@ -2,8 +2,10 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion"; // Прикольная штука
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
-function Modal({ pizza, onClose, isAuthenticated }) {
+function Modal({ pizza, onClose }) {
+  const { isAuthenticated } = useSelector((state) => state.auth);
   console.log(isAuthenticated);
 
   const router = useRouter();
