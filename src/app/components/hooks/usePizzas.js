@@ -1,17 +1,20 @@
 import { useMemo } from "react";
 
 export const usePizzas = (search, select, pizzas) => {
-  console.log(pizzas);
-
   return useMemo(() => {
-    let newPizzas = pizzas;
-    if (select) {
-      newPizzas = newPizzas.sort((a, b) => {
-        console.log(a[select], b[select], "select");
+    if (pizzas == undefined) {
+      console.log(pizzas);
+      return [];
+    }
 
+    let newPizzas = [...pizzas];
+    if (select) {
+      newPizzas.sort((a, b) => {
+        console.log(a[select], b[select], "select");
         return String(a[select]).localeCompare(String(b[select]));
       });
     }
+
     if (search.length > 0) {
       newPizzas = newPizzas.filter((pizza) => {
         return (
@@ -20,6 +23,7 @@ export const usePizzas = (search, select, pizzas) => {
         );
       });
     }
+
     return newPizzas;
   }, [search, select, pizzas]);
 };

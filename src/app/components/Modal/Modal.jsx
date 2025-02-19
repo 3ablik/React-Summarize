@@ -1,14 +1,20 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion"; // Прикольная штука
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeFromCart } from "../../store/slices/authSlice";
 
 function Modal({ pizza, onClose }) {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
   console.log(isAuthenticated);
+  console.log(userAuth);
 
   const router = useRouter();
+
+  const location = window.location.pathname;
+
+  const dispatch = useDispatch();
   const [rotation, setRotation] = useState(0);
   const [isClickedButton, setIsClickedButton] = useState(false);
   const [inputValue, setInputValue] = useState("");
@@ -25,6 +31,15 @@ function Modal({ pizza, onClose }) {
   const handleLoginClick = () => {
     router.push("/login");
   };
+
+  if (location === "/profile") {
+    useEffect(() => {
+      const existingPizza = userAuth.cart.find((p) => p.id === pizza.id);
+      if (!existingPizza) {
+        onClose(); // Закрываем модалку, если пиццы нет в корзине
+      }
+    }, [userAuth.cart, pizza.id, onClose]);
+  }
 
   return (
     <div
@@ -138,17 +153,40 @@ function Modal({ pizza, onClose }) {
                 }
               }}
             />
-            <button
-              style={{
-                width: "300px",
-                height: "50px",
-                fontSize: "20px",
-                marginTop: "20px",
-              }}
-              onClick={() => handleAnimationButton()}
-            >
-              {isClickedButton ? "No more animation" : "Click for animation"}
-            </button>
+            {location === "/profile" ? (
+              <button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                  fontSize: "20px",
+                  marginTop: "20px",
+                }}
+                onClick={() => {
+                  dispatch(
+                    removeFromCart({
+                      pizza: {
+                        ...pizza,
+                      },
+                      user: userAuth,
+                    })
+                  );
+                }}
+              >
+                Remove from basket
+              </button>
+            ) : (
+              <button
+                style={{
+                  width: "300px",
+                  height: "50px",
+                  fontSize: "20px",
+                  marginTop: "20px",
+                }}
+                onClick={() => handleAnimationButton()}
+              >
+                {isClickedButton ? "No more animation" : "Click for animation"}
+              </button>
+            )}
             <button
               style={{
                 width: "300px",
@@ -157,7 +195,19 @@ function Modal({ pizza, onClose }) {
                 marginTop: "20px",
               }}
               onClick={
-                isAuthenticated ? console.log(true) : () => handleLoginClick()
+                isAuthenticated
+                  ? () => {
+                      dispatch(
+                        addToCart({
+                          pizza: {
+                            ...pizza,
+                            specialRequest: inputValue,
+                          },
+                          user: userAuth,
+                        })
+                      );
+                    }
+                  : () => handleLoginClick()
               }
             >
               {isAuthenticated

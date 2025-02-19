@@ -3,30 +3,44 @@ import PizzasItem from "./PizzasItem";
 import React, { useState, useEffect } from "react";
 import { usePizzas } from "../hooks/usePizzas";
 
-const PizzasList = ({ onSelectPizza }) => {
+const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
   const [pizzas, setPizzas] = useState([]);
-  const url_api = "https://free-food-menus-api-two.vercel.app/pizzas";
-  useEffect(() => {
-    async function getPizzas() {
-      const response = await axios.get(url_api);
+  const [pizzasFound, setPizzasFound] = useState("");
 
-      const foundPizza = await Promise.all(
-        // Обратился к gpt за функциями так как некоторые картины не грузились.
-        response.data.map(async (pizza) => {
-          try {
-            // Если найдена картина, то пропускат
-            await axios.head(pizza.img);
-            return pizza;
-          } catch {
-            // null
-            return null;
-          }
-        })
-      );
-      setPizzas(foundPizza.filter(Boolean)); // Фильтруем null-значения
+  useEffect(() => {
+    if (pizzasList && pizzasList.length > 0) {
+      setPizzas(pizzasList);
+      setPizzasFound("Here is your cart :)");
+    } else if (url_api) {
+      async function getPizzas() {
+        try {
+          const response = await axios.get(url_api);
+          const foundPizza = await Promise.all(
+            response.data.map(async (pizza) => {
+              try {
+                await axios.head(pizza.img);
+                return pizza;
+              } catch {
+                return null;
+              }
+            })
+          );
+          const filteredPizzas = foundPizza.filter(Boolean);
+          setPizzas(filteredPizzas);
+          setPizzasFound(
+            filteredPizzas.length > 0 ? "Menu" : "There is no pizzas :("
+          );
+        } catch (error) {
+          console.error("Error fetching pizzas:", error);
+          setPizzasFound("Failed to load pizzas.");
+        }
+      }
+      getPizzas();
+    } else {
+      setPizzas([]);
+      setPizzasFound("There is no pizzas :(");
     }
-    getPizzas();
-  }, []);
+  }, [pizzasList, url_api]);
 
   const [select, setSelect] = useState("");
   const [search, setSearch] = useState("");
@@ -37,8 +51,7 @@ const PizzasList = ({ onSelectPizza }) => {
       <div
         style={{
           display: "flex",
-          gap: "35%",
-          justifyContent: "center",
+          justifyContent: "space-around",
           padding: "20px",
           alignItems: "center",
         }}
@@ -52,11 +65,9 @@ const PizzasList = ({ onSelectPizza }) => {
           type="text"
           placeholder="Search"
           value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-          }}
+          onChange={(e) => setSearch(e.target.value)}
         />
-        <p style={{ color: "black", fontSize: 40 }}>Menu</p>
+        <p style={{ color: "black", fontSize: 40 }}>{pizzasFound}</p>
         <select
           style={{
             height: "35px",
@@ -64,10 +75,7 @@ const PizzasList = ({ onSelectPizza }) => {
             width: "200px",
           }}
           value={select}
-          onChange={(e) => {
-            setSelect(e.target.value);
-            console.log(select);
-          }}
+          onChange={(e) => setSelect(e.target.value)}
         >
           <option disabled value="">
             Sort
@@ -76,14 +84,14 @@ const PizzasList = ({ onSelectPizza }) => {
           <option value="name">By name</option>
         </select>
       </div>
-
       <div className="pizza-list">
         {filteredAndSortedPizzas.map((pizza) => (
-          <PizzasItem
-            key={pizza.id || pizza.name}
-            pizza={pizza}
-            onSelectPizza={onSelectPizza}
-          />
+          <div key={pizza.id || pizza.name}>
+            <PizzasItem pizza={pizza} onSelectPizza={onSelectPizza} />
+            {pizza.quantity && (
+              <p style={{ color: "black" }}>Quantity: {pizza.quantity}</p>
+            )}
+          </div>
         ))}
       </div>
     </div>

@@ -1,9 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { logout } from "../store/slices/authSlice";
+import { logout, clearCart } from "../store/slices/authSlice";
 import Link from "next/link";
 import styled from "styled-components";
+import PizzasList from "../components/pizzas/PizzasList";
+import Modal from "../components/Modal/Modal";
+import { useRouter } from "next/navigation";
 
 const StyledLink = styled(Link)`
   display: inline-block;
@@ -24,6 +27,11 @@ const StyledLink = styled(Link)`
 const Profile = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
+  console.log(userAuth, isAuthenticated);
+
+  const router = useRouter();
+
+  const [selectedPizza, setSelectedPizza] = useState();
 
   return (
     <div>
@@ -56,6 +64,38 @@ const Profile = () => {
           >
             Exit
           </button>
+          <main>
+            <div>
+              <PizzasList
+                onSelectPizza={setSelectedPizza}
+                url_api={null}
+                pizzasList={userAuth.cart}
+              />
+              {selectedPizza && (
+                <Modal
+                  pizza={selectedPizza}
+                  onClose={() => setSelectedPizza(null)}
+                />
+              )}
+            </div>
+          </main>
+          {userAuth.cart.length > 0 ? (
+            <button
+              onClick={() => {
+                dispatch(clearCart({ user: userAuth }));
+              }}
+            >
+              Buy All!
+            </button>
+          ) : (
+            <button
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              Go Shopping!
+            </button>
+          )}
         </div>
       ) : (
         <div>

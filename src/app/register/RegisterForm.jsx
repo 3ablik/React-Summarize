@@ -15,6 +15,7 @@ const RegisterForm = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isAuthenticated, error } = useSelector((state) => state.auth);
+  console.log(isAuthenticated, error);
 
   const [loginInput, setLogin] = useState("");
   const [emailInput, setEmail] = useState("");
@@ -60,6 +61,7 @@ const RegisterForm = () => {
                 login: loginInput,
                 email: emailInput,
                 password: passwordInput,
+                cart: null,
               })
             )
           }
