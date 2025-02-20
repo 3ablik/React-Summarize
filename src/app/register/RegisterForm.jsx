@@ -8,7 +8,6 @@ import styled from "styled-components";
 const StyledLink = styled(Link)`
   display: inline-block;
   line-height: 42px;
-  background-color: #171717;
 `;
 
 const RegisterForm = () => {
@@ -28,7 +27,8 @@ const RegisterForm = () => {
   }, [isAuthenticated, router]);
 
   return (
-    <div className="register-form" style={{ height: "350px" }}>
+    <div className="login-form" style={{ height: "350px" }}>
+      <h1 style={{ color: "#333" }}>Register</h1>
       <div>
         <input
           onChange={(e) => setLogin(e.target.value)}
@@ -73,8 +73,8 @@ const RegisterForm = () => {
             style={{
               margin: "0",
               textAlign: "center",
-              backgroundColor: "#ffffff",
-              color: "#171717",
+              backgroundColor: "#ffa500",
+              color: "#ffffff",
               border: "none",
               borderRadius: "4px",
               cursor: "pointer",

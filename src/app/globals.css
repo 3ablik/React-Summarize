@@ -103,3 +103,125 @@ footer img {
 footer p {
   font-size: 14px;
 }
+
+.profile-container {
+  padding: 20px;
+  color: #fff;
+  border-radius: 8px;
+  margin: 50px auto;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-info {
+  margin-bottom: 20px;
+  background-color: #f9f9f9;
+  color: var(--foreground);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 600px;
+}
+
+.logout-button {
+  background-color: red;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-info h3 {
+  margin: 10px 0;
+}
+
+.profile-buttons {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.profile-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.profile-buttons button:hover {
+  background-color: #555;
+}
+
+.profile-buttons .buy-button {
+  background-color: green;
+  color: #fff;
+}
+
+.profile-buttons .shop-button {
+  background-color: blue;
+  color: #fff;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  width: 300px;
+  margin: 50px auto;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-form input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.login-form button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: var(--background);
+  color: #fff;
+  transition: background-color 0.3s;
+}
+
+.login-form button:hover {
+  background-color: var(--foreground);
+}
+
+.login-form .register-link {
+  display: inline-block;
+  line-height: 42px;
+  margin: 0;
+  text-align: center;
+  background-color: var(--background) !important;
+  border-radius: 4px;
+  color: #ffffff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 120px;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.login-form .register-link:hover {
+  background-color: var(--foreground);
+}

@@ -47,13 +47,16 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
   const filteredAndSortedPizzas = usePizzas(search, select, pizzas);
 
   return (
-    <div>
+    <div
+      style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+    >
       <div
         style={{
           display: "flex",
           justifyContent: "space-around",
           padding: "20px",
           alignItems: "center",
+          width: 1070,
         }}
       >
         <input

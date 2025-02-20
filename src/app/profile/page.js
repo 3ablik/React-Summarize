@@ -34,36 +34,26 @@ const Profile = () => {
   const [selectedPizza, setSelectedPizza] = useState();
 
   return (
-    <div>
-      <h1
-        style={{
-          color: "white",
-        }}
-      >
-        Profile
-      </h1>
+    <div className="profile-container">
+      <h1 className="profile-header">Profile</h1>
       {isAuthenticated ? (
-        <div>
-          <h3
-            style={{
-              color: "white",
-            }}
-          >
-            Login: {userAuth.login}
-          </h3>
-          <h3
-            style={{
-              color: "white",
-            }}
-          >
-            Email: {userAuth.email}
-          </h3>
-          <button
-            onClick={() => dispatch(logout())}
-            style={{ backgroundColor: "red", color: "#fff" }}
-          >
-            Exit
-          </button>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <div className="profile-info">
+            <h3>Login: {userAuth.login}</h3>
+            <h3>Email: {userAuth.email}</h3>
+            <button
+              onClick={() => dispatch(logout())}
+              className="logout-button"
+            >
+              Exit
+            </button>
+          </div>
           <main>
             <div>
               <PizzasList
@@ -78,27 +68,31 @@ const Profile = () => {
                 />
               )}
             </div>
+            <div className="profile-buttons">
+              {userAuth.cart.length > 0 ? (
+                <button
+                  onClick={() => {
+                    dispatch(clearCart({ user: userAuth }));
+                  }}
+                  className="buy-button"
+                >
+                  Buy All!
+                </button>
+              ) : (
+                <button
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                  className="shop-button"
+                >
+                  Go Shopping!
+                </button>
+              )}
+            </div>
           </main>
-          {userAuth.cart.length > 0 ? (
-            <button
-              onClick={() => {
-                dispatch(clearCart({ user: userAuth }));
-              }}
-            >
-              Buy All!
-            </button>
-          ) : (
-            <button
-              onClick={() => {
-                router.push("/");
-              }}
-            >
-              Go Shopping!
-            </button>
-          )}
         </div>
       ) : (
-        <div>
+        <div style={{ textAlign: "center" }}>
           <StyledLink href="/login">Maybe sign in?</StyledLink>
         </div>
       )}

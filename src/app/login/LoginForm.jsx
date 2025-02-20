@@ -9,7 +9,6 @@ import styled from "styled-components";
 const StyledLink = styled(Link)`
   display: inline-block;
   line-height: 42px;
-  background-color: #171717;
 `;
 
 const LoginForm = () => {
@@ -27,7 +26,8 @@ const LoginForm = () => {
   }, [isAuthenticated, router]);
 
   return (
-    <div className="login-form" style={{ height: "350px" }}>
+    <div className="login-form">
+      <h1 style={{ color: "#333" }}>Login</h1>
       <div>
         <input
           onChange={(e) => setLoginInput(e.target.value)}
@@ -56,23 +56,7 @@ const LoginForm = () => {
           Login
         </button>
         <StyledLink href="/register">
-          <div
-            style={{
-              margin: "0",
-              textAlign: "center",
-              backgroundColor: "#ffffff",
-              color: "#171717",
-              border: "none",
-              borderRadius: "4px",
-              cursor: "pointer",
-              transition: "backgroundColor 0.3s",
-              width: "120px",
-              fontSize: "15px",
-              fontWeight: "300",
-            }}
-          >
-            No account?
-          </div>
+          <div className="register-link">No account?</div>
         </StyledLink>
       </div>
 
