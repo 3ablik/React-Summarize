@@ -25,6 +25,8 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
               }
             })
           );
+          console.log(foundPizza, "foundPizza");
+
           const filteredPizzas = foundPizza.filter(Boolean);
           setPizzas(filteredPizzas);
           setPizzasFound(

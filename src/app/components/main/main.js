@@ -5,7 +5,7 @@ import Modal from "../Modal/Modal";
 
 export default function Main() {
   const [selectedPizza, setSelectedPizza] = useState();
-  const url_api = "https://free-food-menus-api-two.vercel.app/pizzas";
+  const url_api = "https://67f55318913986b16fa42b4b.mockapi.io/pizzas";
   return (
     <main>
       <div>
