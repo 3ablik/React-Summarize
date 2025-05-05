@@ -10,9 +10,16 @@ const PizzasItem = ({ pizza, onSelectPizza }) => {
     >
       <img src={pizza.img} alt={pizza.name} />
       <h2>{pizza.name}</h2>
-      <div>
-        <p>{pizza.dsc}</p>
-        <p>{pizza.price}$</p>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          height: 75,
+          justifyContent: "space-between",
+        }}
+      >
+        <p className="description">{pizza.dsc}</p>
+        <p className="price">{pizza.price}$</p>
       </div>
     </div>
   );

@@ -1,5 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Roboto:ital,wght@0,100..900;1,100..900&family=Schoolbell&display=swap");
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --background: #ffa500;
   --foreground: #cfbda9;
@@ -66,11 +70,11 @@ header nav img {
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
-  width: 200px;
-  text-align: center;
+  width: 300px;
+  height: 415px;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 
 .pizza-item img {
@@ -80,13 +84,14 @@ header nav img {
 
 .pizza-item h2 {
   font-size: 22px;
-  margin: 10px 0;
+  margin: 10px 0 0 0;
 }
 
 .pizza-item p {
   font-size: 16px;
-  margin: 5px 0;
+  margin: 2px 0;
 }
+
 
 footer {
   background-color: var(--background);

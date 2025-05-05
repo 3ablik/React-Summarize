@@ -54,42 +54,6 @@ const Profile = () => {
               Exit
             </button>
           </div>
-          <main>
-            <div>
-              <PizzasList
-                onSelectPizza={setSelectedPizza}
-                url_api={null}
-                pizzasList={userAuth.cart}
-              />
-              {selectedPizza && (
-                <Modal
-                  pizza={selectedPizza}
-                  onClose={() => setSelectedPizza(null)}
-                />
-              )}
-            </div>
-            <div className="profile-buttons">
-              {userAuth.cart.length > 0 ? (
-                <button
-                  onClick={() => {
-                    dispatch(clearCart({ user: userAuth }));
-                  }}
-                  className="buy-button"
-                >
-                  Buy All!
-                </button>
-              ) : (
-                <button
-                  onClick={() => {
-                    router.push("/");
-                  }}
-                  className="shop-button"
-                >
-                  Go Shopping!
-                </button>
-              )}
-            </div>
-          </main>
         </div>
       ) : (
         <div style={{ textAlign: "center" }}>
