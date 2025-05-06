@@ -5,19 +5,35 @@ import img from "../images/logo.png";
 const Header = () => {
   console.log(img.src);
 
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
+  const cart = userAuth.cart || [];
+  let cartLength = 0;
+  cart.forEach((item) => {
+    cartLength += item.quantity;
+  });
+  console.log(cart);
+
   return (
-    <header>
-      <nav>
+    <header className="flex justify-center">
+      <nav className="w-[90%]">
         <div>
           <Link href="/">Home</Link>
-          <Link href="/login">Sign In</Link>
-          <Link href="register">Sign Up</Link>
+          {isAuthenticated ? null : (
+            <div>
+              <Link href="/login">Sign In</Link>
+              <Link href="register">Sign Up</Link>
+            </div>
+          )}
           <Link href="/profile">Profile</Link>
         </div>
 
         {isAuthenticated ? (
-          <Link href="/cart">Cart</Link>
+          <div className="relative">
+            <Link href="/cart">Cart</Link>
+            {cartLength > 0 && (
+              <div className=" absolute top-0 right-0">{cartLength}</div>
+            )}
+          </div>
         ) : (
           <img src={img.src} alt="Logo" />
         )}

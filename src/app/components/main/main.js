@@ -8,7 +8,7 @@ export default function Main() {
   const url_api = "https://67f55318913986b16fa42b4b.mockapi.io/pizzas";
   return (
     <main>
-      <div>
+      <div className="flex flex-col items-center justify-center w-full h-full">
         <PizzasList
           onSelectPizza={setSelectedPizza}
           url_api={url_api}

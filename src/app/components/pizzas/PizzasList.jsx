@@ -51,6 +51,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
   return (
     <div
       style={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+      className="w-[90%]"
     >
       <div
         style={{
@@ -62,11 +63,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
         }}
       >
         <input
-          style={{
-            height: "35px",
-            border: "3px solid black",
-            width: "200px",
-          }}
+          className="h-35 border-3 border-black w-200 bg-white text-black"
           type="text"
           placeholder="Search"
           value={search}
@@ -74,11 +71,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api }) => {
         />
         <p style={{ color: "black", fontSize: 40 }}>{pizzasFound}</p>
         <select
-          style={{
-            height: "35px",
-            border: "3px solid black",
-            width: "200px",
-          }}
+          className="h-35 border-3 border-black w-200 bg-white"
           value={select}
           onChange={(e) => setSelect(e.target.value)}
         >

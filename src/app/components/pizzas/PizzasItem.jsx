@@ -9,16 +9,11 @@ const PizzasItem = ({ pizza, onSelectPizza }) => {
       onClick={() => onSelectPizza(pizza)}
     >
       <img src={pizza.img} alt={pizza.name} />
-      <h2>{pizza.name}</h2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          height: 75,
-          justifyContent: "space-between",
-        }}
-      >
-        <p className="description">{pizza.dsc}</p>
+      <div className="flex flex-col justify-between h-[115px]">
+        <div className="flex flex-col">
+          <h2>{pizza.name}</h2>
+          <p className="description">{pizza.dsc}</p>
+        </div>
         <p className="price">{pizza.price}$</p>
       </div>
     </div>

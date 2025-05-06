@@ -36,7 +36,7 @@ function Modal({ pizza, onClose }) {
     useEffect(() => {
       const existingPizza = userAuth.cart.find((p) => p.id === pizza.id);
       if (!existingPizza) {
-        onClose(); // Закрываем модалку, если пиццы нет в корзине
+        onClose();
       }
     }, [userAuth.cart, pizza.id, onClose]);
   }
@@ -141,6 +141,8 @@ function Modal({ pizza, onClose }) {
                 height: "50px",
                 fontSize: "20px",
                 marginTop: "20px",
+                border: "2px solid #ccc",
+                borderRadius: "5px",
               }}
               placeholder="Any special requests?"
               onChange={(e) => {
@@ -193,6 +195,7 @@ function Modal({ pizza, onClose }) {
                 height: "50px",
                 fontSize: "20px",
                 marginTop: "20px",
+                cursor: "pointer",
               }}
               onClick={
                 isAuthenticated
