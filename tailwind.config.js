@@ -4,7 +4,12 @@ module.exports = {
     "./src/app/**/*.{js,ts,jsx,tsx}", // сканируем все файлы в src/app
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        background: "var(--background)",
+        foreground: "var(--foreground)",
+      },
+    },
   },
   plugins: [],
   corePlugins: {

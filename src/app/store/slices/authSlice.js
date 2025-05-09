@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
 const storedUsers = localStorage.getItem("users");
 const users =
   storedUsers == null
@@ -48,12 +47,19 @@ const authSlice = createSlice({
       localStorage.removeItem("userAuth");
     },
     register: (state, action) => {
-      const userExists = state.users.find(
-        (u) => u.login === action.payload.login
-      );
+      const { login, email } = action.payload;
 
-      if (userExists) {
-        state.error = "User already exists";
+      const loginExists = state.users.some((u) => u.login === login);
+      const emailExists = state.users.some((u) => u.email === email);
+
+      if (emailExists && loginExists) {
+        state.error = "Email and login already exist";
+        state.isAuthenticated = false;
+      } else if (emailExists) {
+        state.error = "Email already exists";
+        state.isAuthenticated = false;
+      } else if (loginExists) {
+        state.error = "Login already exists";
         state.isAuthenticated = false;
       } else {
         const newUser = { ...action.payload, cart: [] };

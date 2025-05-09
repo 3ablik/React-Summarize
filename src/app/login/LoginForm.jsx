@@ -52,6 +52,7 @@ const LoginForm = () => {
           onClick={() =>
             dispatch(login({ login: loginInput, password: passwordInput }))
           }
+          className="bg-background"
         >
           Login
         </button>
