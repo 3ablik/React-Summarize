@@ -2,7 +2,7 @@ import img from "../images/logo.png";
 
 export default function Footer() {
   return (
-    <footer>
+    <footer className="mt-auto">
       <img src={img.src} alt="logo" />
       <p>
         Git:{" "}

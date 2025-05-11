@@ -24,8 +24,6 @@ const RegisterForm = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const { isAuthenticated, error } = useSelector((state) => state.auth);
-  console.log(isAuthenticated, error);
-
   const [loginInput, setLogin] = useState("");
   const [emailInput, setEmail] = useState("");
   const [passwordInput, setPassword] = useState("");
@@ -57,7 +55,7 @@ const RegisterForm = () => {
           console.log("Email sent");
         })
         .catch((error) => {
-          console.error("Email sending failed:", error);
+          console.log("Email sending failed:", error);
         });
 
       router.push("/");

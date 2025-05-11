@@ -7,7 +7,9 @@ const users =
           login: "admin",
           email: "admin@admin.admin",
           password: "admin123",
+          role: "admin",
           cart: [],
+          favorites: [],
         },
       ]
     : JSON.parse(storedUsers);
@@ -15,7 +17,7 @@ const users =
 localStorage.setItem("users", JSON.stringify(users));
 
 const initialState = {
-  isAuthenticated: false,
+  isAuthenticated: JSON.parse(localStorage.getItem("userAuth")) ? true : false,
   error: null,
   users: users,
   userAuth: JSON.parse(localStorage.getItem("userAuth")) || null,
@@ -62,13 +64,32 @@ const authSlice = createSlice({
         state.error = "Login already exists";
         state.isAuthenticated = false;
       } else {
-        const newUser = { ...action.payload, cart: [] };
+        const newUser = {
+          ...action.payload,
+          role: "user",
+          cart: [],
+          favorites: [],
+        };
         state.users.push(newUser);
         localStorage.setItem("users", JSON.stringify(state.users));
         state.userAuth = newUser;
         localStorage.setItem("userAuth", JSON.stringify(newUser));
         state.isAuthenticated = true;
       }
+    },
+    deleteUser: (state, action) => {
+      const { login } = action.payload;
+      state.users = state.users.filter((u) => u.login !== login);
+      localStorage.setItem("users", JSON.stringify(state.users));
+    },
+    updateUser: (state, action) => {
+      const { login, email, password } = action.payload;
+      state.users = state.users.map((u) =>
+        u.login === login || u.email === email
+          ? { ...u, login, email, password }
+          : u
+      );
+      localStorage.setItem("users", JSON.stringify(state.users));
     },
     addToCart: (state, action) => {
       if (!state.userAuth) return;
@@ -122,6 +143,26 @@ const authSlice = createSlice({
       );
       localStorage.setItem("users", JSON.stringify(state.users));
     },
+    removeFromCartById: (state, action) => {
+      if (!state.userAuth) return;
+
+      const { id } = action.payload;
+      const updatedUser = { ...state.userAuth };
+
+      if (!updatedUser.cart) {
+        updatedUser.cart = [];
+      }
+
+      updatedUser.cart = updatedUser.cart.filter((p) => p.id !== id);
+
+      state.userAuth = updatedUser;
+      localStorage.setItem("userAuth", JSON.stringify(updatedUser));
+
+      state.users = state.users.map((u) =>
+        u.login === updatedUser.login ? updatedUser : u
+      );
+      localStorage.setItem("users", JSON.stringify(state.users));
+    },
     clearCart: (state) => {
       if (!state.userAuth) return;
 
@@ -137,9 +178,97 @@ const authSlice = createSlice({
       );
       localStorage.setItem("users", JSON.stringify(state.users));
     },
+
+    addToFavorites: (state, action) => {
+      if (!state.userAuth) return;
+
+      const { pizza } = action.payload;
+      const updatedUser = { ...state.userAuth };
+
+      if (!updatedUser.favorites) {
+        updatedUser.favorites = [];
+      }
+
+      const alreadyFavorite = updatedUser.favorites.find(
+        (p) => p.id === pizza.id
+      );
+
+      if (!alreadyFavorite) {
+        updatedUser.favorites.push(pizza);
+      }
+
+      state.userAuth = updatedUser;
+      localStorage.setItem("userAuth", JSON.stringify(updatedUser));
+
+      state.users = state.users.map((u) =>
+        u.login === updatedUser.login ? updatedUser : u
+      );
+      localStorage.setItem("users", JSON.stringify(state.users));
+    },
+
+    removeFromFavoritesById: (state, action) => {
+      if (!state.userAuth) return;
+
+      const { id } = action.payload;
+      const updatedUser = { ...state.userAuth };
+
+      if (!updatedUser.favorites) {
+        updatedUser.favorites = [];
+      }
+
+      updatedUser.favorites = updatedUser.favorites.filter((p) => p.id !== id);
+
+      state.userAuth = updatedUser;
+      localStorage.setItem("userAuth", JSON.stringify(updatedUser));
+
+      state.users = state.users.map((u) =>
+        u.login === updatedUser.login ? updatedUser : u
+      );
+      localStorage.setItem("users", JSON.stringify(state.users));
+    },
+
+    toggleFavorite: (state, action) => {
+      if (!state.userAuth) return;
+
+      const { pizza } = action.payload;
+      const updatedUser = { ...state.userAuth };
+
+      if (!updatedUser.favorites) {
+        updatedUser.favorites = [];
+      }
+
+      const exists = updatedUser.favorites.find((p) => p.id === pizza.id);
+
+      if (exists) {
+        updatedUser.favorites = updatedUser.favorites.filter(
+          (p) => p.id !== pizza.id
+        );
+      } else {
+        updatedUser.favorites.push(pizza);
+      }
+
+      state.userAuth = updatedUser;
+      localStorage.setItem("userAuth", JSON.stringify(updatedUser));
+
+      state.users = state.users.map((u) =>
+        u.login === updatedUser.login ? updatedUser : u
+      );
+      localStorage.setItem("users", JSON.stringify(state.users));
+    },
   },
 });
 
-export const { login, logout, register, addToCart, removeFromCart, clearCart } =
-  authSlice.actions;
+export const {
+  login,
+  logout,
+  register,
+  deleteUser,
+  updateUser,
+  addToCart,
+  removeFromCart,
+  clearCart,
+  addToFavorites,
+  removeFromFavoritesById,
+  toggleFavorite,
+} = authSlice.actions;
 export default authSlice.reducer;

@@ -7,6 +7,10 @@ const Header = () => {
 
   const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
   const cart = userAuth?.cart || [];
+  const role = userAuth?.role || "guest";
+  console.log(role);
+  console.log(isAuthenticated);
+
   let cartLength = 0;
   cart.forEach((item) => {
     cartLength += item.quantity;
@@ -27,8 +31,16 @@ const Header = () => {
           <Link href="/profile">Profile</Link>
         </div>
 
+        {role === "admin" && <div>Greetings, Admin!</div>}
+        {role === "worker" && <div>Hello, {userAuth.login}!</div>}
+
         {isAuthenticated ? (
           <div className="relative">
+            {role === "admin" && (
+              <Link className="ml-4" href="/usersList">
+                Users
+              </Link>
+            )}
             <Link className="ml-4" href="/cart">
               Cart
             </Link>

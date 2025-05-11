@@ -35,8 +35,8 @@ const Cart = () => {
   return (
     <>
       {isAuthenticated ? (
-        <main>
-          <div>
+        <main className="mb-10">
+          <div className="flex flex-col items-center justify-around w-full h-full m-auto  min-h-[500px]">
             <PizzasList
               onSelectPizza={setSelectedPizza}
               url_api={null}
@@ -48,27 +48,35 @@ const Cart = () => {
                 onClose={() => setSelectedPizza(null)}
               />
             )}
-          </div>
-          <div className="profile-buttons">
-            {userAuth.cart.length > 0 ? (
-              <button
-                onClick={() => {
-                  dispatch(clearCart({ user: userAuth }));
-                }}
-                className="buy-button"
-              >
-                Buy All!
-              </button>
-            ) : (
-              <button
-                onClick={() => {
-                  router.push("/");
-                }}
-                className="shop-button"
-              >
-                Go Shopping!
-              </button>
-            )}
+            <div className="profile-buttons w-[80%] max-w-[870px]">
+              {userAuth.cart.length > 0 ? (
+                <div className="w-full flex justify-between items-center">
+                  <button
+                    onClick={() => {
+                      router.push("/payment");
+                    }}
+                    className="buy-button bg-green-600 hover:bg-green-700"
+                  >
+                    Buy All!
+                  </button>
+                  <button
+                    onClick={() => dispatch(clearCart({ user: userAuth }))}
+                    className="buy-button bg-red-600 hover:bg-red-700"
+                  >
+                    Clear cart
+                  </button>
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    router.push("/");
+                  }}
+                  className="shop-button"
+                >
+                  Go Shopping!
+                </button>
+              )}
+            </div>
           </div>
         </main>
       ) : (

@@ -1,7 +1,9 @@
 "use client";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import "./globals.css";
 import Header from "./components/header/header";
+import Footer from "./components/footer/footer";
 import { Provider } from "react-redux";
 import store from "../app/store/store";
 
@@ -19,9 +21,13 @@ export default function RootLayout({ children }) {
   return (
     <Provider store={store}>
       <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <body
+          className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-[800px]`}
+        >
+          <Toaster position="top-right" />
           <Header />
           {children}
+          <Footer />
         </body>
       </html>
     </Provider>
