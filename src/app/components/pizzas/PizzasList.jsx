@@ -4,22 +4,22 @@ import React, { useState, useEffect } from "react";
 import { usePizzas } from "../hooks/usePizzas";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
+
 const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
   const [pizzas, setPizzas] = useState([]);
   const [pizzasFound, setPizzasFound] = useState("");
   const [rotation, setRotation] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [select, setSelect] = useState("");
+  const [search, setSearch] = useState("");
 
   const { userAuth } = useSelector((state) => state.auth);
   const role = userAuth?.role || "guest";
 
   const location = window.location.pathname;
 
-  const handleClickImg = () => {
-    setRotation((prev) => prev - 45);
-    setTimeout(() => {
-      setRotation((prev) => prev + 405);
-    }, 500);
-  };
+  const itemsPerPage = 5;
+
   async function getPizzas() {
     try {
       const response = await axios.get(url_api);
@@ -45,6 +45,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
       setPizzasFound("Failed to load pizzas.");
     }
   }
+
   useEffect(() => {
     if (pizzasList && pizzasList.length > 0) {
       setPizzas(pizzasList);
@@ -57,9 +58,23 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
     }
   }, [pizzasList, url_api]);
 
-  const [select, setSelect] = useState("");
-  const [search, setSearch] = useState("");
-  const filteredAndSortedPizzas = usePizzas(search, select, pizzas);
+  const handleClickImg = () => {
+    setRotation((prev) => prev - 45);
+    setTimeout(() => {
+      setRotation((prev) => prev + 405);
+    }, 500);
+  };
+
+  const filteredPizzas = usePizzas(search, select, pizzas);
+
+  const totalPages = Math.ceil(filteredPizzas.length / itemsPerPage);
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredPizzas.slice(indexOfFirstItem, indexOfLastItem);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, select]);
 
   return (
     <div
@@ -101,6 +116,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
           <option value="name">By name</option>
         </select>
       </div>
+
       {location === "/" && (
         <div className="flex w-[85%] flex-col m-auto">
           <motion.img
@@ -119,8 +135,9 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
           />
         </div>
       )}
+
       <div className="pizza-list">
-        {filteredAndSortedPizzas.map((pizza) => (
+        {currentItems.map((pizza) => (
           <div key={pizza.id || pizza.name}>
             <PizzasItem pizza={pizza} onSelectPizza={onSelectPizza} />
           </div>
@@ -135,6 +152,40 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
             </div>
           </div>
         )}
+      </div>
+
+      <div className="flex justify-center mt-6 items-center gap-2 flex-wrap">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300"
+        >
+          ←
+        </button>
+
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+          <button
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            className={`px-3 py-1 rounded ${
+              page === currentPage
+                ? "bg-blue-500 text-white"
+                : "bg-gray-200 hover:bg-gray-300"
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+
+        <button
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+          className="px-3 py-1 bg-gray-200 rounded disabled:opacity-50 hover:bg-gray-300"
+        >
+          →
+        </button>
       </div>
     </div>
   );
