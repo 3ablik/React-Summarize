@@ -43,7 +43,11 @@ const RegisterForm = () => {
   }, [isValidEmail, isValidPassword, loginInput]);
 
   useEffect(() => {
-    if (error && !errorMessage.includes(error)) {
+    if (
+      error &&
+      !errorMessage.includes(error) &&
+      error !== "Wrong login or password"
+    ) {
       setErrorMessage((prev) => [...prev, error]);
     }
   }, [error]);
@@ -63,7 +67,7 @@ const RegisterForm = () => {
   }, [isAuthenticated, router]);
 
   return (
-    <div className="login-form" style={{ height: "350px" }}>
+    <div className="login-form" style={{ height: "400px" }}>
       <h1 style={{ color: "#333" }}>Register</h1>
       <div>
         <input
@@ -104,15 +108,13 @@ const RegisterForm = () => {
               setIsValidPassword(false);
               setErrorMessage((prev) => {
                 if (
-                  prev.includes(
-                    "The password must contain at least one uppercase letter and a special character, and must not contain spaces"
-                  )
+                  prev.includes("The password must match the standard RFC5322")
                 ) {
                   return prev;
                 } else {
                   return [
                     ...prev,
-                    "The password must contain at least one uppercase letter and a special character, and must not contain spaces",
+                    "The password must match the standard RFC5322",
                   ];
                 }
               });
@@ -120,9 +122,7 @@ const RegisterForm = () => {
               setIsValidPassword(true);
               setErrorMessage((prev) => {
                 return prev.filter(
-                  (el) =>
-                    el !==
-                    "The password must contain at least one uppercase letter and a special character, and must not contain spaces"
+                  (el) => el !== "The password must match the standard RFC5322"
                 );
               });
             }
@@ -158,10 +158,10 @@ const RegisterForm = () => {
               );
             } else {
               setErrorMessage((prev) => {
-                if (prev.includes("Please fill in all fields")) {
+                if (prev.includes("Please fill in all fields correctly")) {
                   return prev;
                 } else {
-                  return [...prev, "Please fill in all fields"];
+                  return [...prev, "Please fill in all fields correctly"];
                 }
               });
             }

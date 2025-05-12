@@ -20,9 +20,9 @@ const geistMono = Geist_Mono({
 export default function RootLayout({ children }) {
   return (
     <Provider store={store}>
-      <html lang="en">
+      <html lang="en" className="relative">
         <body
-          className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-[800px]`}
+          className={`${geistSans.variable} ${geistMono.variable} flex flex-col min-h-[100vh]  `}
         >
           <Toaster position="top-right" />
           <Header />

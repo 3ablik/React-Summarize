@@ -15,7 +15,7 @@ export default function Main() {
   console.log(role, "Main");
 
   return (
-    <main>
+    <main className="mb-10">
       <div className="flex flex-col items-center justify-center w-full h-full">
         <PizzasList
           onSelectPizza={setSelectedPizza}

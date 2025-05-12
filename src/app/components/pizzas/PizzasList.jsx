@@ -142,7 +142,7 @@ const PizzasList = ({ onSelectPizza, pizzasList, url_api, onNewPizza }) => {
             <PizzasItem pizza={pizza} onSelectPizza={onSelectPizza} />
           </div>
         ))}
-        {role === "admin" && location === "/" && (
+        {role === "admin" && location === "/" && currentPage === totalPages && (
           <div
             className="flex flex-col justify-center items-center h-[415px] w-[300px] bg-gray-100"
             onClick={() => onNewPizza(true)}

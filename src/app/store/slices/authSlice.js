@@ -39,7 +39,9 @@ const authSlice = createSlice({
         state.error = null;
         localStorage.setItem("userAuth", JSON.stringify(user));
       } else {
-        state.error = "Wrong login or password";
+        if (state.error !== "Wrong login or password") {
+          state.error = "Wrong login or password";
+        }
       }
     },
     logout: (state) => {
@@ -49,6 +51,7 @@ const authSlice = createSlice({
       localStorage.removeItem("userAuth");
     },
     register: (state, action) => {
+      state.error = null;
       const { login, email } = action.payload;
 
       const loginExists = state.users.some((u) => u.login === login);

@@ -54,7 +54,7 @@ function Modal({ pizza, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl p-6 w-full max-w-3xl h-4/6  flex flex-row gap-6  max-lg:h-[70%]  max-lg:max-w-[70%]  max-[850px]:flex-col max-[850px]:h-[90%] max-[850px]:gap-2 max-[850px]:items-center max-[850px]:justify-around"
+        className="bg-white rounded-xl p-6 w-full max-w-4xl h-3/6  flex flex-row gap-6  max-lg:h-[70%]  max-lg:max-w-[70%]  max-[850px]:flex-col max-[850px]:h-[90%] max-[850px]:gap-2 max-[850px]:items-center max-[850px]:justify-around"
       >
         <motion.img
           key={isClickedButton ? "animate" : "reset"}
@@ -64,7 +64,7 @@ function Modal({ pizza, onClose }) {
           animate={isClickedButton ? { rotate: 8280 } : { rotate: 0 }}
           transition={{ duration: 10 }}
         />
-        <div className="flex flex-col items-center justify-between w-[60%] max-[850px]:w-full max-[850px]:flex-row">
+        <div className="flex flex-col items-center justify-between w-[60%] max-[850px]:w-full max-[850px]:flex-row  max-[440px]:flex-col">
           <div className="w-full flex flex-col gap-4  max-lg:gap-0  max-[850px]:w-[45%]  max-md:justify-between">
             <div className="flex justify-between items-baseline  max-[850px]:flex-row-reverse max-[850px]:justify-end max-[850px]:gap-2">
               <p className="text-2xl text-orange-500 font-semibold  max-lg:text-lg">

@@ -46,15 +46,15 @@ function Modal({ pizza, onClose }) {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white rounded-xl p-6 w-full max-w-3xl h-4/6  flex flex-row gap-6  max-lg:h-[70%]  max-lg:max-w-[70%]  max-[850px]:flex-col max-[850px]:h-[90%] max-[850px]:gap-2 max-[850px]:items-center max-[850px]:justify-around"
+        className="bg-white rounded-xl p-6 w-full max-w-4xl h-3/6  flex flex-row gap-6   max-lg:max-w-[70%]  max-[850px]:flex-col max-[850px]:h-[90%] max-[850px]:gap-2 max-[850px]:items-center max-[850px]:justify-evenly  max-[550px]:h-[70%]  max-[380px]:max-h-[60%]  max-[450px]:justify-between"
       >
         <img
           src={pizza.img}
           alt={pizza.name}
-          className="max-w-[50%]  max-[850px]:max-w-[70%] max-[850px]:max-h-[100%] max-md:max-w-[90%]  max-sm:max-w-[225px]"
+          className="max-w-[50%]  max-[850px]:max-w-[70%] max-[850px]:max-h-[100%] max-md:max-w-[90%]  max-sm:max-w-[275px]  max-[440px]:max-w-[95%]"
         />
-        <div className="flex flex-col items-center justify-between w-[60%] max-[850px]:w-full max-[850px]:flex-row">
-          <div className="w-full flex flex-col gap-4  max-lg:gap-0  max-[850px]:w-[45%]  max-md:justify-between">
+        <div className="flex flex-col items-center justify-between w-[60%] max-[850px]:w-full max-[850px]:h-[43%] max-[850px]:flex-row  max-[450px]:flex-col  max-[450px]:h-[60%]">
+          <div className="w-full flex flex-col gap-4  max-lg:gap-0  max-[850px]:w-[45%]  max-md:justify-between  max-[450px]:w-[80%]">
             <div className="flex justify-between items-baseline  max-[850px]:flex-row-reverse max-[850px]:justify-end max-[850px]:gap-2">
               <input
                 className="text-2xl text-orange-500 font-semibold  max-lg:text-lg  w-[70%]"
@@ -76,21 +76,21 @@ function Modal({ pizza, onClose }) {
             </p>
             <div className="text-lg text-orange-500  max-lg:text-sm    flex flex-col items-start justify-between max-[850px]:max-w-[100%]">
               <textarea
-                className="w-[70%] max-[800px]:w-[90%]"
+                className="w-[70%] max-[800px]:w-[90%] max-[450px]:text-xs max-[450px]:max-h-[40px]"
                 placeholder="Produced in"
                 value={country}
                 onChange={(e) => setCountry(e.target.value)}
                 disabled={!isEdit}
               />
               <textarea
-                className="w-[70%] max-[800px]:w-[90%]"
+                className="w-[70%] max-[800px]:w-[90%] max-[450px]:text-xs max-[450px]:max-h-[40px]"
                 placeholder="Rating"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
                 disabled={!isEdit}
               />
               <textarea
-                className="w-[70%] max-[800px]:w-[90%]"
+                className="w-[70%] max-[800px]:w-[90%] max-[450px]:text-xs max-[450px]:max-h-[40px]"
                 placeholder="Price"
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
@@ -98,15 +98,15 @@ function Modal({ pizza, onClose }) {
               />
             </div>
           </div>
-          <div className="w-full flex flex-col items-center justify-between max-[850px]:max-w-[45%]">
+          <div className="w-full flex flex-col items-center justify-between max-[850px]:max-w-[45%]  max-[450px]:flex-row max-[450px]:max-w-[70%]">
             <button
-              className="w-full max-w-md h-10 text-lg mt-4 px-3 border-2 border-gray-300 rounded  max-[850px]:h-10"
+              className="w-full max-w-md h-10 text-lg mt-4 px-3 border-2 border-gray-300 rounded  max-[850px]:h-10  max-[450px]:max-w-[45%]"
               onClick={() => (isEdit ? handleSave() : setIsEdit(true))}
             >
               {isEdit ? "Save" : "Edit"}
             </button>
             <button
-              className="w-full max-w-md h-10 text-lg mt-4 text-black rounded  max-lg:text-sm  max-[850px]:h-10 max-[850px]:"
+              className="w-full max-w-md h-10 text-lg mt-4 text-black rounded  max-lg:text-sm  max-[850px]:h-10 max-[450px]:max-w-[45%]"
               onClick={() => {
                 dispatch(deleteProduct(pizza.id));
                 onClose();
