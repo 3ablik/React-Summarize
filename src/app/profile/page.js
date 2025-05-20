@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logout, updateUser } from "../store/slices/authSlice";
 import Link from "next/link";
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import PizzasList from "../components/pizzas/PizzasList";
 import Modal from "../components/Modal/Modal";
@@ -29,6 +29,11 @@ const Profile = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { isAuthenticated, userAuth } = useSelector((state) => state.auth);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push("/login");
+    }
+  }, [isAuthenticated, router]);
   const favorites = userAuth?.favorites || [];
 
   const [isEditing, setIsEditing] = useState(false);

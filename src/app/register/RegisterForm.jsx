@@ -83,17 +83,22 @@ const RegisterForm = () => {
             if (!emailRegex.test(e.target.value)) {
               setIsValidEmail(false);
               setErrorMessage((prev) => {
-                if (prev.includes("Please enter a valid email address")) {
+                if (
+                  prev.includes("Email address must match the standard RFC5322")
+                ) {
                   return prev;
                 } else {
-                  return [...prev, "Please enter a valid email address"];
+                  return [
+                    ...prev,
+                    "Email address must match the standard RFC5322",
+                  ];
                 }
               });
             } else if (emailRegex.test(e.target.value)) {
               setIsValidEmail(true);
               setErrorMessage((prev) => {
                 return prev.filter(
-                  (el) => el !== "Please enter a valid email address"
+                  (el) => el !== "Email address must match the standard RFC5322"
                 );
               });
             }
@@ -107,22 +112,17 @@ const RegisterForm = () => {
             if (!passwordRegex.test(e.target.value)) {
               setIsValidPassword(false);
               setErrorMessage((prev) => {
-                if (
-                  prev.includes("The password must match the standard RFC5322")
-                ) {
+                if (prev.includes("The password must match the standard")) {
                   return prev;
                 } else {
-                  return [
-                    ...prev,
-                    "The password must match the standard RFC5322",
-                  ];
+                  return [...prev, "The password must match the standard"];
                 }
               });
             } else if (passwordRegex.test(e.target.value)) {
               setIsValidPassword(true);
               setErrorMessage((prev) => {
                 return prev.filter(
-                  (el) => el !== "The password must match the standard RFC5322"
+                  (el) => el !== "The password must match the standard"
                 );
               });
             }
