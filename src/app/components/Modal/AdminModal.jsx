@@ -135,7 +135,7 @@ function Modal({ pizza, onClose }) {
               {isEdit ? "Save" : "Edit"}
             </button>
             <button
-              className="w-full max-w-md h-10 text-lg mt-4 max-[450px]:mt-0 text-black rounded  max-lg:text-sm  max-[850px]:h-10 max-[450px]:max-w-full  max-[450px]:text-xs"
+              className="w-full max-w-md h-10 text-lg mt-4 max-[450px]:mt-bg-red-500 text-black rounded  max-lg:text-sm  max-[850px]:h-10 max-[450px]:max-w-full  max-[450px]:text-xs"
               onClick={() => {
                 dispatch(deleteProduct(pizza.id));
                 onClose();

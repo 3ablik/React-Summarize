@@ -133,7 +133,7 @@ function Modal({ pizza, onClose }) {
 
             {location === "/cart" ? (
               <button
-                className="w-full max-w-md h-10 text-lg mt-4  max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-red-500 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
+                className="w-full max-w-md h-10 text-lg mt-4 bg-red-500 text-white  max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-red-500 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
                 onClick={() => {
                   dispatch(
                     removeFromCart({ pizza: { ...pizza }, user: userAuth })
@@ -145,7 +145,7 @@ function Modal({ pizza, onClose }) {
               </button>
             ) : (
               <button
-                className="w-full max-w-md h-10 text-lg mt-4  max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-gray-300 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
+                className="w-full max-w-md h-10 text-lg mt-4 bg-blue-400 text-white max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-gray-300 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
                 onClick={() => {
                   if (isClickedButton) {
                     setIsClickedButton(false);
@@ -159,7 +159,7 @@ function Modal({ pizza, onClose }) {
             )}
 
             <button
-              className="w-full max-w-md h-10 text-lg mt-4  max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-gray-300 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
+              className="w-full max-w-md h-10 text-lg mt-4 bg-green-500 text-white  max-[850px]:mt-2 max-[450px]:mt-0 px-3 border-2 border-gray-300 rounded  max-[850px]:h-8  max-[450px]:max-w-full max-[450px]:text-xs"
               onClick={() => {
                 if (isAuthenticated) {
                   if (role === "admin") {
